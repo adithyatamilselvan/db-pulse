@@ -1,0 +1,13 @@
+line-length = 110
+target-version = "py311"
+extend-exclude = [".venv", "frontend", ".dev"]
+
+[lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "C4", "SIM", "RUF100"]
+ignore = ["S101", "S311", "B008", "UP017", "SIM108", "E501"]
+
+[lint.per-file-ignores]
+"automation/**" = ["S", "B", "C4", "E731", "E701", "E702", "SIM", "F841"]
+"backend/app/tests/**" = ["S", "B", "E701", "E702", "SIM"]
+"conftest.py" = ["S", "E402"]
+"scripts/**" = ["S"]

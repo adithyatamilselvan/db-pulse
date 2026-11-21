@@ -1,0 +1,134 @@
+{
+ "explainVersion": "1",
+ "queryPlanner": {
+  "namespace": "dbpulse_fixture_capture.orders",
+  "parsedQuery": {
+   "$or": [
+    {
+     "customer_id": {
+      "$eq": 3
+     }
+    },
+    {
+     "tag": {
+      "$eq": "t4"
+     }
+    }
+   ]
+  },
+  "indexFilterSet": false,
+  "queryHash": "821FA545",
+  "planCacheShapeHash": "821FA545",
+  "planCacheKey": "DDEBC7AA",
+  "optimizationTimeMillis": 2,
+  "maxIndexedOrSolutionsReached": false,
+  "maxIndexedAndSolutionsReached": false,
+  "maxScansToExplodeReached": false,
+  "prunedSimilarIndexes": false,
+  "winningPlan": {
+   "isCached": false,
+   "stage": "SUBPLAN",
+   "inputStage": {
+    "stage": "COLLSCAN",
+    "filter": {
+     "$or": [
+      {
+       "customer_id": {
+        "$eq": 3
+       }
+      },
+      {
+       "tag": {
+        "$eq": "t4"
+       }
+      }
+     ]
+    },
+    "direction": "forward"
+   }
+  },
+  "rejectedPlans": []
+ },
+ "executionStats": {
+  "executionSuccess": true,
+  "nReturned": 675,
+  "executionTimeMillis": 28,
+  "totalKeysExamined": 0,
+  "totalDocsExamined": 30000,
+  "executionStages": {
+   "isCached": false,
+   "stage": "SUBPLAN",
+   "nReturned": 675,
+   "executionTimeMillisEstimate": 25,
+   "works": 30001,
+   "advanced": 675,
+   "needTime": 29325,
+   "needYield": 0,
+   "saveState": 1,
+   "restoreState": 1,
+   "isEOF": 1,
+   "inputStage": {
+    "stage": "COLLSCAN",
+    "filter": {
+     "$or": [
+      {
+       "customer_id": {
+        "$eq": 3
+       }
+      },
+      {
+       "tag": {
+        "$eq": "t4"
+       }
+      }
+     ]
+    },
+    "nReturned": 675,
+    "executionTimeMillisEstimate": 21,
+    "works": 30001,
+    "advanced": 675,
+    "needTime": 29325,
+    "needYield": 0,
+    "saveState": 1,
+    "restoreState": 1,
+    "isEOF": 1,
+    "direction": "forward",
+    "docsExamined": 30000
+   }
+  }
+ },
+ "queryShapeHash": "3583B3FDE9C6697FE2BE2AC5D7014196228F26BBE0ACCA60D2AC09DDAABBD328",
+ "command": {
+  "find": "orders",
+  "filter": {
+   "$or": [
+    {
+     "customer_id": 3
+    },
+    {
+     "tag": "t4"
+    }
+   ]
+  },
+  "$db": "dbpulse_fixture_capture"
+ },
+ "serverInfo": {
+  "host": "adithya",
+  "port": 27118,
+  "version": "8.2.1",
+  "gitVersion": "3312bdcf28aa65f5930005e21c2cb130f648b8c3"
+ },
+ "serverParameters": {
+  "internalQueryFacetBufferSizeBytes": 104857600,
+  "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+  "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+  "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+  "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+  "internalQueryProhibitBlockingMergeOnMongoS": 0,
+  "internalQueryMaxAddToSetBytes": 104857600,
+  "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+  "internalQueryFrameworkControl": "trySbeRestricted",
+  "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+ },
+ "ok": 1.0
+}

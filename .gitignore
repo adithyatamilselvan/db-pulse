@@ -1,0 +1,23 @@
+# secrets & local state
+.env
+.env.*
+!.env.example
+.dev/
+*.log
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+# node
+node_modules/
+frontend/dist/
+# test & demo artifacts
+test-results/
+playwright-report/
+reports-output/
+demo-output/
+.locust/

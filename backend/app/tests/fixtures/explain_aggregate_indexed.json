@@ -1,0 +1,186 @@
+{
+ "explainVersion": "1",
+ "queryPlanner": {
+  "namespace": "dbpulse_fixture_capture.orders",
+  "parsedQuery": {
+   "customer_id": {
+    "$eq": 7
+   }
+  },
+  "indexFilterSet": false,
+  "queryHash": "AD572C0E",
+  "planCacheShapeHash": "AD572C0E",
+  "planCacheKey": "3073B895",
+  "optimizationTimeMillis": 0,
+  "optimizedPipeline": true,
+  "maxIndexedOrSolutionsReached": false,
+  "maxIndexedAndSolutionsReached": false,
+  "maxScansToExplodeReached": false,
+  "prunedSimilarIndexes": false,
+  "winningPlan": {
+   "isCached": false,
+   "stage": "SORT",
+   "sortPattern": {
+    "total": 1
+   },
+   "memLimit": 104857600,
+   "limitAmount": 5,
+   "type": "simple",
+   "inputStage": {
+    "stage": "FETCH",
+    "inputStage": {
+     "stage": "IXSCAN",
+     "keyPattern": {
+      "customer_id": 1,
+      "status": 1
+     },
+     "indexName": "customer_id_1_status_1",
+     "isMultiKey": false,
+     "multiKeyPaths": {
+      "customer_id": [],
+      "status": []
+     },
+     "isUnique": false,
+     "isSparse": false,
+     "isPartial": false,
+     "indexVersion": 2,
+     "direction": "forward",
+     "indexBounds": {
+      "customer_id": [
+       "[7, 7]"
+      ],
+      "status": [
+       "[MinKey, MaxKey]"
+      ]
+     }
+    }
+   }
+  },
+  "rejectedPlans": []
+ },
+ "executionStats": {
+  "executionSuccess": true,
+  "nReturned": 5,
+  "executionTimeMillis": 5,
+  "totalKeysExamined": 75,
+  "totalDocsExamined": 75,
+  "executionStages": {
+   "isCached": false,
+   "stage": "SORT",
+   "nReturned": 5,
+   "executionTimeMillisEstimate": 0,
+   "works": 82,
+   "advanced": 5,
+   "needTime": 76,
+   "needYield": 0,
+   "saveState": 0,
+   "restoreState": 0,
+   "isEOF": 1,
+   "sortPattern": {
+    "total": 1
+   },
+   "memLimit": 104857600,
+   "limitAmount": 5,
+   "type": "simple",
+   "totalDataSizeSorted": 611,
+   "usedDisk": false,
+   "spills": 0,
+   "spilledRecords": 0,
+   "spilledBytes": 0,
+   "spilledDataStorageSize": 0,
+   "inputStage": {
+    "stage": "FETCH",
+    "nReturned": 75,
+    "executionTimeMillisEstimate": 0,
+    "works": 76,
+    "advanced": 75,
+    "needTime": 0,
+    "needYield": 0,
+    "saveState": 0,
+    "restoreState": 0,
+    "isEOF": 1,
+    "docsExamined": 75,
+    "alreadyHasObj": 0,
+    "inputStage": {
+     "stage": "IXSCAN",
+     "nReturned": 75,
+     "executionTimeMillisEstimate": 0,
+     "works": 76,
+     "advanced": 75,
+     "needTime": 0,
+     "needYield": 0,
+     "saveState": 0,
+     "restoreState": 0,
+     "isEOF": 1,
+     "keyPattern": {
+      "customer_id": 1,
+      "status": 1
+     },
+     "indexName": "customer_id_1_status_1",
+     "isMultiKey": false,
+     "multiKeyPaths": {
+      "customer_id": [],
+      "status": []
+     },
+     "isUnique": false,
+     "isSparse": false,
+     "isPartial": false,
+     "indexVersion": 2,
+     "direction": "forward",
+     "indexBounds": {
+      "customer_id": [
+       "[7, 7]"
+      ],
+      "status": [
+       "[MinKey, MaxKey]"
+      ]
+     },
+     "keysExamined": 75,
+     "seeks": 1,
+     "dupsTested": 0,
+     "dupsDropped": 0
+    }
+   }
+  }
+ },
+ "queryShapeHash": "0290BB3C1C534D0DB79B4977E998652653032351862908B66C12A6632EBEC064",
+ "command": {
+  "aggregate": "orders",
+  "cursor": {},
+  "pipeline": [
+   {
+    "$match": {
+     "customer_id": 7
+    }
+   },
+   {
+    "$sort": {
+     "total": 1
+    }
+   },
+   {
+    "$limit": 5
+   }
+  ],
+  "$db": "dbpulse_fixture_capture"
+ },
+ "serverInfo": {
+  "host": "adithya",
+  "port": 27118,
+  "version": "8.2.1",
+  "gitVersion": "3312bdcf28aa65f5930005e21c2cb130f648b8c3"
+ },
+ "serverParameters": {
+  "internalQueryFacetBufferSizeBytes": 104857600,
+  "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+  "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+  "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+  "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+  "internalQueryProhibitBlockingMergeOnMongoS": 0,
+  "internalQueryMaxAddToSetBytes": 104857600,
+  "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+  "internalQueryFrameworkControl": "trySbeRestricted",
+  "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+ },
+ "ok": 1.0
+}

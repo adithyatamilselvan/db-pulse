@@ -1,0 +1,86 @@
+# DB Pulse: full local stack (no cloud accounts, no paid services).
+#
+#   cp .env.example .env && python scripts/init_env.py --force    # generates SECRET_KEY / ENCRYPTION_KEY
+#   docker compose up --build
+#
+# Ports (host): 8080 UI, 8000 API (+ /docs), 27117 internal MongoDB, 27118 demo "monitored" MongoDB.
+# Redis is internal only. Connection strings below use Compose service names, overriding .env.
+
+x-app-env: &app-env
+  ENVIRONMENT: production
+  INTERNAL_MONGO_URI: mongodb://mongo-internal:27017
+  DEMO_MONGO_URI: mongodb://mongo-monitored:27017
+  CELERY_BROKER_URL: redis://redis:6379/0
+  ENABLE_INPROCESS_SCHEDULER: "false"   # Celery beat does the scheduling here
+  CORS_ORIGINS: http://localhost:8080
+
+services:
+  mongo-internal:
+    image: mongo:8.0
+    command: ["mongod", "--bind_ip_all"]
+    volumes: [mongo_internal_data:/data/db]
+    ports: ["127.0.0.1:27117:27017"]
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # A separate MongoDB that DB Pulse *monitors* (kept apart from DB Pulse's own metadata store).
+  mongo-monitored:
+    image: mongo:8.0
+    command: ["mongod", "--bind_ip_all"]
+    volumes: [mongo_monitored_data:/data/db]
+    ports: ["127.0.0.1:27118:27017"]
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    volumes: [redis_data:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build: ./backend
+    env_file: .env
+    environment: *app-env
+    depends_on:
+      mongo-internal: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    ports: ["127.0.0.1:8000:8000"]
+    restart: unless-stopped
+
+  worker:
+    build: ./backend
+    command: ["celery", "-A", "app.workers.celery_app", "worker", "--beat", "--loglevel=INFO"]
+    env_file: .env
+    environment: *app-env
+    depends_on:
+      mongo-internal: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "celery -A app.workers.celery_app inspect ping -d celery@$$HOSTNAME || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      backend: { condition: service_healthy }
+    ports: ["127.0.0.1:8080:80"]
+    restart: unless-stopped
+
+volumes:
+  mongo_internal_data:
+  mongo_monitored_data:
+  redis_data:

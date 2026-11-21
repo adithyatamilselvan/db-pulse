@@ -1,0 +1,195 @@
+{
+ "explainVersion": "2",
+ "queryPlanner": {
+  "namespace": "dbpulse_fixture_capture.orders",
+  "parsedQuery": {
+   "status": {
+    "$eq": "PENDING"
+   }
+  },
+  "indexFilterSet": false,
+  "queryHash": "658B5FD8",
+  "planCacheShapeHash": "658B5FD8",
+  "planCacheKey": "E63A4712",
+  "optimizationTimeMillis": 5,
+  "optimizedPipeline": true,
+  "maxIndexedOrSolutionsReached": false,
+  "maxIndexedAndSolutionsReached": false,
+  "maxScansToExplodeReached": false,
+  "prunedSimilarIndexes": false,
+  "winningPlan": {
+   "isCached": false,
+   "queryPlan": {
+    "stage": "GROUP",
+    "planNodeId": 3,
+    "inputStage": {
+     "stage": "COLLSCAN",
+     "planNodeId": 1,
+     "filter": {
+      "status": {
+       "$eq": "PENDING"
+      }
+     },
+     "direction": "forward"
+    }
+   },
+   "slotBasedPlan": {
+    "slots": "$$RESULT=s9 env: {  }",
+    "stages": "[3] project [s9 = newBsonObj(\"_id\", s6, \"n\", s8)] \n[3] project [s8 = (convert ( s7, int32) ?: s7)] \n[3] group [s6] [s7 = count()] spillSlots[s5] mergingExprs[sum(s5)] \n[3] project [s6 = (s3 ?: null)] \n[1] filter {traverseF(s4, lambda(l2.0) { ((move(l2.0) == \"PENDING\") ?: false) }, false)} \n[1] scan s1 s2 none none none none none none [s3 = tag, s4 = status] @\"4b64f305-e0f2-4e98-9455-0c5bea01f453\" true false "
+   }
+  },
+  "rejectedPlans": []
+ },
+ "executionStats": {
+  "executionSuccess": true,
+  "nReturned": 50,
+  "executionTimeMillis": 22,
+  "totalKeysExamined": 0,
+  "totalDocsExamined": 30000,
+  "executionStages": {
+   "stage": "project",
+   "planNodeId": 3,
+   "nReturned": 50,
+   "executionTimeMillisEstimate": 11,
+   "opens": 1,
+   "closes": 1,
+   "saveState": 1,
+   "restoreState": 1,
+   "isEOF": 1,
+   "projections": {
+    "9": "newBsonObj(\"_id\", s6, \"n\", s8) "
+   },
+   "inputStage": {
+    "stage": "project",
+    "planNodeId": 3,
+    "nReturned": 50,
+    "executionTimeMillisEstimate": 11,
+    "opens": 1,
+    "closes": 1,
+    "saveState": 1,
+    "restoreState": 1,
+    "isEOF": 1,
+    "projections": {
+     "8": "(convert ( s7, int32) ?: s7) "
+    },
+    "inputStage": {
+     "stage": "group",
+     "planNodeId": 3,
+     "nReturned": 50,
+     "executionTimeMillisEstimate": 11,
+     "opens": 1,
+     "closes": 1,
+     "saveState": 1,
+     "restoreState": 1,
+     "isEOF": 1,
+     "groupBySlots": [
+      6
+     ],
+     "expressions": {
+      "7": "count() ",
+      "initExprs": {
+       "7": null
+      }
+     },
+     "mergingExprs": {
+      "5": "sum(s5) "
+     },
+     "usedDisk": false,
+     "spills": 0,
+     "spilledBytes": 0,
+     "spilledRecords": 0,
+     "spilledDataStorageSize": 0,
+     "inputStage": {
+      "stage": "project",
+      "planNodeId": 3,
+      "nReturned": 10000,
+      "executionTimeMillisEstimate": 11,
+      "opens": 1,
+      "closes": 1,
+      "saveState": 1,
+      "restoreState": 1,
+      "isEOF": 1,
+      "projections": {
+       "6": "(s3 ?: null) "
+      },
+      "inputStage": {
+       "stage": "filter",
+       "planNodeId": 1,
+       "nReturned": 10000,
+       "executionTimeMillisEstimate": 11,
+       "opens": 1,
+       "closes": 1,
+       "saveState": 1,
+       "restoreState": 1,
+       "isEOF": 1,
+       "numTested": 30000,
+       "filter": "traverseF(s4, lambda(l2.0) { ((move(l2.0) == \"PENDING\") ?: false) }, false) ",
+       "inputStage": {
+        "stage": "scan",
+        "planNodeId": 1,
+        "nReturned": 30000,
+        "executionTimeMillisEstimate": 11,
+        "opens": 1,
+        "closes": 1,
+        "saveState": 1,
+        "restoreState": 1,
+        "isEOF": 1,
+        "numReads": 30000,
+        "recordSlot": 1,
+        "recordIdSlot": 2,
+        "scanFieldNames": [
+         "tag",
+         "status"
+        ],
+        "scanFieldSlots": [
+         3,
+         4
+        ]
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "queryShapeHash": "89656005B7BC92FD66DE76CCD3B2E7AD3A6225AA4A38331F1620A6E914716CF7",
+ "command": {
+  "aggregate": "orders",
+  "cursor": {},
+  "pipeline": [
+   {
+    "$match": {
+     "status": "PENDING"
+    }
+   },
+   {
+    "$group": {
+     "_id": "$tag",
+     "n": {
+      "$sum": 1
+     }
+    }
+   }
+  ],
+  "$db": "dbpulse_fixture_capture"
+ },
+ "serverInfo": {
+  "host": "adithya",
+  "port": 27118,
+  "version": "8.2.1",
+  "gitVersion": "3312bdcf28aa65f5930005e21c2cb130f648b8c3"
+ },
+ "serverParameters": {
+  "internalQueryFacetBufferSizeBytes": 104857600,
+  "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+  "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+  "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+  "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+  "internalQueryProhibitBlockingMergeOnMongoS": 0,
+  "internalQueryMaxAddToSetBytes": 104857600,
+  "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+  "internalQueryFrameworkControl": "trySbeRestricted",
+  "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+ },
+ "ok": 1.0
+}

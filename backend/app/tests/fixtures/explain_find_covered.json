@@ -1,0 +1,162 @@
+{
+ "explainVersion": "1",
+ "queryPlanner": {
+  "namespace": "dbpulse_fixture_capture.orders",
+  "parsedQuery": {
+   "$and": [
+    {
+     "customer_id": {
+      "$eq": 7
+     }
+    },
+    {
+     "status": {
+      "$eq": "COMPLETED"
+     }
+    }
+   ]
+  },
+  "indexFilterSet": false,
+  "queryHash": "4F99D3CF",
+  "planCacheShapeHash": "4F99D3CF",
+  "planCacheKey": "4AB85D70",
+  "optimizationTimeMillis": 0,
+  "maxIndexedOrSolutionsReached": false,
+  "maxIndexedAndSolutionsReached": false,
+  "maxScansToExplodeReached": false,
+  "prunedSimilarIndexes": false,
+  "winningPlan": {
+   "isCached": false,
+   "stage": "PROJECTION_COVERED",
+   "transformBy": {
+    "_id": 0,
+    "customer_id": 1,
+    "status": 1
+   },
+   "inputStage": {
+    "stage": "IXSCAN",
+    "keyPattern": {
+     "customer_id": 1,
+     "status": 1
+    },
+    "indexName": "customer_id_1_status_1",
+    "isMultiKey": false,
+    "multiKeyPaths": {
+     "customer_id": [],
+     "status": []
+    },
+    "isUnique": false,
+    "isSparse": false,
+    "isPartial": false,
+    "indexVersion": 2,
+    "direction": "forward",
+    "indexBounds": {
+     "customer_id": [
+      "[7, 7]"
+     ],
+     "status": [
+      "[\"COMPLETED\", \"COMPLETED\"]"
+     ]
+    }
+   }
+  },
+  "rejectedPlans": []
+ },
+ "executionStats": {
+  "executionSuccess": true,
+  "nReturned": 25,
+  "executionTimeMillis": 1,
+  "totalKeysExamined": 25,
+  "totalDocsExamined": 0,
+  "executionStages": {
+   "isCached": false,
+   "stage": "PROJECTION_COVERED",
+   "nReturned": 25,
+   "executionTimeMillisEstimate": 0,
+   "works": 26,
+   "advanced": 25,
+   "needTime": 0,
+   "needYield": 0,
+   "saveState": 0,
+   "restoreState": 0,
+   "isEOF": 1,
+   "transformBy": {
+    "_id": 0,
+    "customer_id": 1,
+    "status": 1
+   },
+   "inputStage": {
+    "stage": "IXSCAN",
+    "nReturned": 25,
+    "executionTimeMillisEstimate": 0,
+    "works": 26,
+    "advanced": 25,
+    "needTime": 0,
+    "needYield": 0,
+    "saveState": 0,
+    "restoreState": 0,
+    "isEOF": 1,
+    "keyPattern": {
+     "customer_id": 1,
+     "status": 1
+    },
+    "indexName": "customer_id_1_status_1",
+    "isMultiKey": false,
+    "multiKeyPaths": {
+     "customer_id": [],
+     "status": []
+    },
+    "isUnique": false,
+    "isSparse": false,
+    "isPartial": false,
+    "indexVersion": 2,
+    "direction": "forward",
+    "indexBounds": {
+     "customer_id": [
+      "[7, 7]"
+     ],
+     "status": [
+      "[\"COMPLETED\", \"COMPLETED\"]"
+     ]
+    },
+    "keysExamined": 25,
+    "seeks": 1,
+    "dupsTested": 0,
+    "dupsDropped": 0
+   }
+  }
+ },
+ "queryShapeHash": "6E862EC9F681AC7B6C5DD578E2F3EB978E857881733707B4AE93CEB7EFF73C5D",
+ "command": {
+  "find": "orders",
+  "filter": {
+   "customer_id": 7,
+   "status": "COMPLETED"
+  },
+  "projection": {
+   "_id": 0,
+   "customer_id": 1,
+   "status": 1
+  },
+  "$db": "dbpulse_fixture_capture"
+ },
+ "serverInfo": {
+  "host": "adithya",
+  "port": 27118,
+  "version": "8.2.1",
+  "gitVersion": "3312bdcf28aa65f5930005e21c2cb130f648b8c3"
+ },
+ "serverParameters": {
+  "internalQueryFacetBufferSizeBytes": 104857600,
+  "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+  "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+  "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+  "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+  "internalQueryProhibitBlockingMergeOnMongoS": 0,
+  "internalQueryMaxAddToSetBytes": 104857600,
+  "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+  "internalQueryFrameworkControl": "trySbeRestricted",
+  "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+ },
+ "ok": 1.0
+}
